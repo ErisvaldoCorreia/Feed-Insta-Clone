@@ -1,7 +1,8 @@
 import React, { useState, useEffect} from 'react';
-import { FlatList, View, Image } from 'react-native';
+import { FlatList } from 'react-native';
 
 import api from '../../../services/service';
+import FeedImage from '../../components/FeedImage';
 
 import {
   Container,
@@ -19,23 +20,21 @@ export default function Feed() {
   const [refreshing, setRefreshing] = useState(false);
 
   async function loadPage() {
+
     if (loading) return;
-
     setLoading(true);
-
     const { data } = await api.get(`/feed?_expand=author`);
-
     setLoading(false);
-
     setFeed(data);
+
   }
 
   async function refreshList() {
+
     setRefreshing(true);
-
     await loadPage();
-
     setRefreshing(false);
+
   }
 
   useEffect(() => {
@@ -62,11 +61,11 @@ export default function Feed() {
               <Name>{item.author.name}</Name>
             </Header>
 
-            {/* <FeedImage
+            <FeedImage
               aspectRatio={item.aspectRatio}
               smallSource={{ uri: item.image }}
               source={{ uri: item.small }}
-            /> */}
+            />
 
             <Description>
               <Name>{item.author.name}</Name> {item.description}
